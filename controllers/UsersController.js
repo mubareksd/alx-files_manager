@@ -67,7 +67,7 @@ class UsersController {
       }
 
       return res.status(200).json({
-        _id: userId,
+        id: userId,
         email: user.email,
       });
     } catch (error) {
