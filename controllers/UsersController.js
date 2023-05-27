@@ -36,8 +36,8 @@ class UsersController {
       });
 
       return res.status(201).json({
-        id: newUser._id,
-        email: newUser.email,
+        id: newUser.insertedId,
+        email,
       });
     } catch (error) {
       return res.status(500).json({
