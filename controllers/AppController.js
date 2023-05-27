@@ -1,7 +1,7 @@
-import { redisClient, dbClient } from "../utils";
+import { redisClient, dbClient } from '../utils';
 
 class AppController {
-  static getStatus = (req, res) => {
+  static getStatus(req, res) {
     try {
       return res.status(200).json({
         redis: redisClient.isAlive(),
@@ -12,9 +12,9 @@ class AppController {
         error: error.message,
       });
     }
-  };
+  }
 
-  static getStats = async (req, res) => {
+  static async getStats(req, res) {
     try {
       return res.status(200).json({
         users: await dbClient.nbUsers(),
@@ -25,7 +25,7 @@ class AppController {
         error: error.message,
       });
     }
-  };
+  }
 }
 
 export default AppController;
