@@ -4,7 +4,7 @@ import { ObjectID } from 'mongodb';
 import { redisClient, dbClient } from '../utils';
 
 class UsersController {
-  static postNew(req, res) {
+  static async postNew(req, res) {
     try {
       const { email, password } = req.body;
 
@@ -20,7 +20,7 @@ class UsersController {
         });
       }
 
-      const user = dbClient.db.collection('users').findOne({ email });
+      const user = await dbClient.db.collection('users').findOne({ email });
 
       if (user) {
         return res.status(400).json({
@@ -30,7 +30,7 @@ class UsersController {
 
       const securePassword = sha1(password);
 
-      const newUser = dbClient.db.collection('users').insertOne({
+      const newUser = await dbClient.db.collection('users').insertOne({
         email,
         password: securePassword,
       });
