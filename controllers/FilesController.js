@@ -76,7 +76,7 @@ class FilesController {
       let resu;
       if (type === 'folder') {
         resu = {
-          userId: user._id,
+          userId: ObjectId(userId),
           name,
           type,
           isPublic: isPublic || false,
@@ -88,7 +88,7 @@ class FilesController {
         const filePath = `${FOLDER_PATH}/${uuid4()}`;
         await writeFile(filePath, Buffer.from(data, 'base64'));
         resu = {
-          userId: user._id,
+          userId: ObjectId(userId),
           name,
           type,
           isPublic: isPublic || false,
@@ -98,11 +98,11 @@ class FilesController {
       const result = await dbClient.db.collection('files').insertOne(resu);
       return res.status(201).json({
         id: result.insertedId,
-        userId: user._id,
+        userId: ObjectId(userId),
         name,
         type,
-        isPublic: isPublic || false,
-        parentId: parentId || 0,
+        isPublic,
+        parentId,
       });
     } catch (error) {
       return res.status(500).json({
